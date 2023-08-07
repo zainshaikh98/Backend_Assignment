@@ -2,6 +2,7 @@ const express = require("express");
 
 let router = express.Router();
 let user = require("../model/user");
+const req = require("express/lib/request");
 
 router.get('/user/:id', async (req, res) => {
     let data = await user.getUser(req.params.id).catch((err) => { return { error: err } });

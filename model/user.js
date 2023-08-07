@@ -5,7 +5,7 @@ let { User } = require('../schema/user')
 
 async function user(param) {
     let schema = joi.object({
-        id:joi.number().allow(),
+        id: joi.number().allow(),
         name: joi.string().min(4).allow(),
         img: joi.string().allow(),
         summary: joi.string().allow()
@@ -45,7 +45,7 @@ async function getUser(id) {
         return { error: "plz provide id" }
     }
 
-    let find = await User.findOne({ where: { id: id } }).catch((err) => {
+    let find = await User.findOne({ where: { id: id }, raw: true }).catch((err) => {
         return { error: err }
     });
     if (!find || (find && find.error)) {
@@ -60,7 +60,7 @@ async function updateUser(param) {
         return { error: check.error, status: 400 }
     }
 
-    let find = await User.findOne({ where: { id: param.id } }).catch((err) => {
+    let find = await User.findOne({ where: { id: param.id }, raw: true }).catch((err) => {
         return { error: err }
     });
     if (!find || (find && find.error)) {
@@ -81,7 +81,7 @@ async function deleteUser(id) {
         return { error: "invalid id" }
     }
 
-    let find = await User.findOne({ where: { id: id } }).catch((err) => {
+    let find = await User.findOne({ where: { id: id }, raw: true }).catch((err) => {
         return { error: err }
     });
     if (!find || (find && find.error)) {

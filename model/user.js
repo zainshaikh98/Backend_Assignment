@@ -5,9 +5,10 @@ let { User } = require('../schema/user')
 
 async function user(param) {
     let schema = joi.object({
-        name: joi.string().min(4).required(),
-        img: joi.string().required(),
-        summery: joi.string().required()
+        id:joi.number().allow(),
+        name: joi.string().min(4).allow(),
+        img: joi.string().allow(),
+        summary: joi.string().allow()
     });
 
     let valid = await schema.validateAsync(param, { abortEarly: false }).catch((err) => {
@@ -39,13 +40,12 @@ async function newUser(param) {
     }
 }
 
-async function getUser(param) {
-    let check = await user(param).catch((err) => { return { error: err } });
-    if (!check || (check && check.error)) {
-        return { error: check.error, status: 400 }
+async function getUser(id) {
+    if (!parseInt(id)) {
+        return { error: "plz provide id" }
     }
 
-    let find = await User.findOne({ where: { id: param.id } }).catch((err) => {
+    let find = await User.findOne({ where: { id: id } }).catch((err) => {
         return { error: err }
     });
     if (!find || (find && find.error)) {
@@ -59,7 +59,7 @@ async function updateUser(param) {
     if (!check || (check && check.error)) {
         return { error: check.error, status: 400 }
     }
-    
+
     let find = await User.findOne({ where: { id: param.id } }).catch((err) => {
         return { error: err }
     });
@@ -73,15 +73,15 @@ async function updateUser(param) {
     if (!updated || (updated && updated.error)) {
         return { error: updated.error, status: 500 }
     }
-    return { data: updated }
+    return { data: "user updated" }
 }
 
 async function deleteUser(id) {
-    if(!parseInt(id)){
-        return {error:"invalid id"}
+    if (!parseInt(id)) {
+        return { error: "invalid id" }
     }
-    
-    let find = await User.findOne({ where: { id:id } }).catch((err) => {
+
+    let find = await User.findOne({ where: { id: id } }).catch((err) => {
         return { error: err }
     });
     if (!find || (find && find.error)) {

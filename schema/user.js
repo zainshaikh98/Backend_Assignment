@@ -16,17 +16,9 @@ User.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    summery: {
+    summary: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    created_by:{
-        type:DataTypes.INTEGER,
-        allowNull:false
-    },
-    updated_by:{
-        type:DataTypes.INTEGER,
-        allowNull:false
     }
 },
     { tableName: "user", modelName: "User", sequelize }

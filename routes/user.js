@@ -2,7 +2,6 @@ const express = require("express");
 
 let router = express.Router();
 let user = require("../model/user");
-const { use } = require("express/lib/application");
 
 router.get('/', async (req, res) => {
     let data = await user.getUser(req.params.id).catch((err) => { return { error: err } });

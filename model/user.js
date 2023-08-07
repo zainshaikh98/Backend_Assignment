@@ -67,7 +67,7 @@ async function updateUser(param) {
         return { error: find.error, status: 404 }
     }
 
-    let updated = await User.update(param, { where: { id: param.id } }).catch((err) => {
+    let updated = await User.update(param, { where: { id: find.id } }).catch((err) => {
         return { error: err }
     });
     if (!updated || (updated && updated.error)) {
@@ -76,20 +76,19 @@ async function updateUser(param) {
     return { data: updated }
 }
 
-async function deleteUser(param) {
-    let check = await user(param).catch((err) => { return { error: err } });
-    if (!check || (check && check.error)) {
-        return { error: check.error, status: 400 }
+async function deleteUser(id) {
+    if(!parseInt(id)){
+        return {error:"invalid id"}
     }
     
-    let find = await User.findOne({ where: { id: param.id } }).catch((err) => {
+    let find = await User.findOne({ where: { id:id } }).catch((err) => {
         return { error: err }
     });
     if (!find || (find && find.error)) {
         return { error: find.error, status: 404 }
     }
 
-    let del = await User.destroy({ where: { id: param.id } }).catch((err) => {
+    let del = await User.destroy({ where: { id: find.id } }).catch((err) => {
         return { error: err }
     });
     if (!del || (del && del.error)) {

@@ -25,6 +25,7 @@ async function user(param) {
     return { data: valid.data }
 }
 
+// function for create.
 async function newUser(param) {
     let check = await user(param).catch((err) => { return { error: err } });
     if (!check || (check && check.error)) {
@@ -40,6 +41,7 @@ async function newUser(param) {
     }
 }
 
+// function for view one.
 async function getUser(id) {
     if (!parseInt(id)) {
         return { error: "plz provide id" }
@@ -54,6 +56,7 @@ async function getUser(id) {
     return { data: find }
 }
 
+// function for update.
 async function updateUser(param) {
     let check = await user(param).catch((err) => { return { error: err } });
     if (!check || (check && check.error)) {
@@ -76,6 +79,7 @@ async function updateUser(param) {
     return { data: "user updated" }
 }
 
+// function for delete.
 async function deleteUser(id) {
     if (!parseInt(id)) {
         return { error: "invalid id" }
